@@ -180,22 +180,23 @@ function App() {
       )}
 
 {/* FOOTER SECTION */}
-<footer className="bg-[#0B1221] text-white pt-24 pb-12 px-6 lg:px-20 border-t border-slate-800">
+<footer className="bg-[#0B1221] text-white pt-20 pb-10 px-6 lg:px-20 border-t border-slate-800">
   <div className="max-w-7xl mx-auto">
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-20">
+    {/* Side-by-Side Grid Layout */}
+    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-16">
       
-      {/* Branding Column */}
-      <div className="lg:col-span-2">
-        <div className="text-3xl font-bold mb-6 text-white">DigiTools</div>
+      {/* 1. DigiTools Branding Column */}
+      <div className="lg:col-span-1">
+        <h2 className="text-3xl font-bold mb-6">DigiTools</h2>
         <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
           Premium digital tools for creators, professionals, and businesses. Work smarter with our suite of powerful tools.
         </p>
       </div>
       
-      {/* Link Columns */}
+      {/* 2. Product Column */}
       <div>
-        <h4 className="font-bold mb-6 text-base text-white">Product</h4>
-        <ul className="space-y-4 text-slate-400 text-sm font-medium">
+        <h4 className="font-semibold mb-6 text-base">Product</h4>
+        <ul className="space-y-4 text-slate-400 text-sm">
           <li className="hover:text-white cursor-pointer transition">Features</li>
           <li className="hover:text-white cursor-pointer transition">Pricing</li>
           <li className="hover:text-white cursor-pointer transition">Templates</li>
@@ -203,9 +204,10 @@ function App() {
         </ul>
       </div>
 
+      {/* 3. Company Column */}
       <div>
-        <h4 className="font-bold mb-6 text-base text-white">Company</h4>
-        <ul className="space-y-4 text-slate-400 text-sm font-medium">
+        <h4 className="font-semibold mb-6 text-base">Company</h4>
+        <ul className="space-y-4 text-slate-400 text-sm">
           <li className="hover:text-white cursor-pointer transition">About</li>
           <li className="hover:text-white cursor-pointer transition">Blog</li>
           <li className="hover:text-white cursor-pointer transition">Careers</li>
@@ -213,9 +215,10 @@ function App() {
         </ul>
       </div>
 
+      {/* 4. Resources Column */}
       <div>
-        <h4 className="font-bold mb-6 text-base text-white">Resources</h4>
-        <ul className="space-y-4 text-slate-400 text-sm font-medium mb-10">
+        <h4 className="font-semibold mb-6 text-base">Resources</h4>
+        <ul className="space-y-4 text-slate-400 text-sm">
           <li className="hover:text-white cursor-pointer transition">Documentation</li>
           <li className="hover:text-white cursor-pointer transition">Help Center</li>
           <li className="hover:text-white cursor-pointer transition">Community</li>
@@ -223,24 +226,24 @@ function App() {
         </ul>
       </div>
 
-      {/* Social Links Side-by-Side with Resources */}
+      {/* 5. Social Links Column (Pashapashi with Resources) */}
       <div>
-        <h4 className="font-bold mb-6 text-base text-white">Social Links</h4>
-        <div className="flex gap-3">
-          {/* Instagram Icon */}
-          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#0B1221] hover:bg-slate-200 cursor-pointer transition shadow-md">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+        <h4 className="font-semibold mb-6 text-base">Social Links</h4>
+        <div className="flex gap-4">
+          {/* Instagram */}
+          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#0B1221] hover:bg-slate-200 cursor-pointer transition">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
               <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.999 0h.001zm1.978 1.149c.83.038 1.282.177 1.583.294.398.155.682.341.98.639.298.298.484.582.639.98.117.301.256.753.294 1.583.039.842.048 1.093.048 3.235s-.01 2.393-.048 3.235c-.038.83-.177 1.282-.294 1.583a2.633 2.633 0 0 1-.639.98 2.633 2.633 0 0 1-.98.639c-.301.117-.753.256-1.583.294-.842.039-1.093.048-3.235.048s-2.393-.01-3.235-.048c-.83-.038-1.282-.177-1.583-.294a2.633 2.633 0 0 1-.98-.639 2.633 2.633 0 0 1-.639-.98c-.117-.301-.256-.753-.294-1.583-.039-.842-.048-1.093-.048-3.235s.01-2.393.048-3.235c.038-.83.177-1.282.294-1.583a2.633 2.633 0 0 1 .639-.98 2.633 2.633 0 0 1 .98-.639c.301-.117.753-.256 1.583-.294.842-.039 1.093-.048 3.235-.048s2.393.01 3.235.048zM8 3.89a4.11 4.11 0 1 0 0 8.22 4.11 4.11 0 0 0 0-8.22zm0 6.786a2.677 2.677 0 1 1 0-5.355 2.677 2.677 0 0 1 0 5.355zm4.823-7.592a1.092 1.092 0 1 0 0 2.184 1.092 1.092 0 0 0 0-2.184z"/>
             </svg>
           </div>
-          {/* Facebook Icon */}
-          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#0B1221] hover:bg-slate-200 cursor-pointer transition shadow-md">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+          {/* Facebook */}
+          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#0B1221] hover:bg-slate-200 cursor-pointer transition">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
               <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
             </svg>
           </div>
-          {/* X Icon */}
-          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#0B1221] hover:bg-slate-200 cursor-pointer transition shadow-md">
+          {/* X (Twitter) */}
+          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#0B1221] hover:bg-slate-200 cursor-pointer transition">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
               <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633Z"/>
             </svg>
@@ -249,8 +252,8 @@ function App() {
       </div>
     </div>
     
-    {/* Bottom Footer Section */}
-    <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-slate-500 text-sm font-medium">
+    {/* Copyright & Legal Links */}
+    <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-slate-500 text-xs font-medium">
       <p>© 2026 Digitools. All rights reserved.</p>
       <div className="flex gap-8">
         <span className="hover:text-white cursor-pointer transition">Privacy Policy</span>
