@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "name": "Resume Builder Pro",
+    "description": "Create professional resumes easily",
+    "price": 19,
+    "period": "one-time",
+    "tag": "popular",
+    "tagType": "Popular",
+    "features": ["100+ templates", "ATS optimization", "Export to PDF"],
+    "icon": "📄"
+  },
+  {
+    "id": 2,
+    "name": "Portfolio Maker",
+    "description": "Build stunning personal portfolios",
+    "price": 9,
+    "period": "monthly",
+    "tag": "new",
+    "tagType": "New",
+    "features": ["Custom domains", "SEO ready", "Premium Themes"],
+    "icon": "🎨"
+  },
+  {
+    "id": 3,
+    "name": "Code Snippet Manager",
+    "description": "Save and reuse code efficiently",
+    "price": 5,
+    "period": "monthly",
+    "tag": "best",
+    "tagType": "Best Seller",
+    "features": ["Cloud sync", "Syntax highlighting", "Global Search"],
+    "icon": "💻"
+  },
+  {
+    "id": 4,
+    "name": "Task Manager AI",
+    "description": "Boost productivity with AI logic",
+    "price": 49,
+    "period": "yearly",
+    "tag": "popular",
+    "tagType": "Popular",
+    "features": ["Auto-scheduling", "Team collab", "Analytics"],
+    "icon": "🤖"
+  },
+  {
+    "id": 5,
+    "name": "SEO Analyzer",
+    "description": "Rank higher on search engines",
+    "price": 25,
+    "period": "monthly",
+    "tag": "best",
+    "tagType": "Best Seller",
+    "features": ["Keyword tracking", "Audit reports", "Backlink info"],
+    "icon": "🔍"
+  },
+  {
+    "id": 6,
+    "name": "Email Campaigner",
+    "description": "Automated email marketing tool",
+    "price": 15,
+    "period": "monthly",
+    "tag": "new",
+    "tagType": "New",
+    "features": ["A/B testing", "Contact segments", "Templates"],
+    "icon": "📧"
+  }
+]
