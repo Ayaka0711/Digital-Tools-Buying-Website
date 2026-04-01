@@ -143,7 +143,7 @@ function App() {
           </p>
         </div>
 
-        {/* VIEW TOGGLE - EXACTLY AS IMAGE */}
+        {/* VIEW TOGGLE */}
         <div className="flex justify-center mb-16">
           <div className="bg-[#F8FAFC] p-1 rounded-full border border-slate-100 flex shadow-sm">
             <button
@@ -164,45 +164,63 @@ function App() {
         {view === 'products' ? (
           /* PRODUCTS GRID */
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((p) => (
-              <div key={p.id} className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm relative flex flex-col hover:shadow-xl hover:-translate-y-2 transition-all duration-500 group">
-                <div className="absolute top-6 right-6">
-                  <span className={`${p.tagColor} text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest`}>
-                    {p.tag}
-                  </span>
-                </div>
-                <div className="w-16 h-16 bg-[#F8FAFC] rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition-transform">
-                  {p.icon}
-                </div>
-                <h3 className="text-[24px] font-black text-[#1E293B] mb-3 leading-tight">{p.name}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed mb-8">{p.description}</p>
-                <div className="flex items-baseline gap-1 mb-8">
-                  <span className="text-4xl font-black text-[#1E293B]">${p.price}</span>
-                  <span className="text-slate-400 font-bold">{p.period}</span>
-                </div>
-                <div className="space-y-4 mb-10 flex-grow">
-                  {p.features?.map((f, i) => (
-                    <div key={i} className="flex items-center gap-3 text-sm font-semibold text-slate-600">
-                      <div className="bg-green-100 p-0.5 rounded-full">
-                        <svg className="w-3.5 h-3.5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="4">
-                          <path d="M5 13l4 4L19 7" />
-                        </svg>
+            {products.map((p) => {
+              const isInCart = cart.some(item => item.id === p.id);
+              return (
+                <div key={p.id} className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm relative flex flex-col hover:shadow-xl hover:-translate-y-2 transition-all duration-500 group">
+                  <div className="absolute top-6 right-6">
+                    <span className={`${p.tagColor} text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest`}>
+                      {p.tag}
+                    </span>
+                  </div>
+                  <div className="w-16 h-16 bg-[#F8FAFC] rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition-transform">
+                    {p.icon}
+                  </div>
+                  <h3 className="text-[24px] font-black text-[#1E293B] mb-3 leading-tight">{p.name}</h3>
+                  <p className="text-slate-500 text-sm leading-relaxed mb-8">{p.description}</p>
+                  <div className="flex items-baseline gap-1 mb-8">
+                    <span className="text-4xl font-black text-[#1E293B]">${p.price}</span>
+                    <span className="text-slate-400 font-bold">{p.period}</span>
+                  </div>
+                  <div className="space-y-4 mb-10 flex-grow">
+                    {p.features?.map((f, i) => (
+                      <div key={i} className="flex items-center gap-3 text-sm font-semibold text-slate-600">
+                        <div className="bg-green-100 p-0.5 rounded-full">
+                          <svg className="w-3.5 h-3.5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="4">
+                            <path d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                        {f}
                       </div>
-                      {f}
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                  
+                  {/* DYNAMIC BUTTON LOGIC */}
+                  <button 
+                    onClick={() => addToCart(p)} 
+                    disabled={isInCart}
+                    className={`w-full py-4 font-black rounded-2xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2 
+                      ${isInCart 
+                        ? 'bg-green-500 text-white shadow-green-100 cursor-default' 
+                        : 'bg-[#7C3AED] hover:bg-[#6D28D9] text-white shadow-purple-100'}`}
+                  >
+                    {isInCart ? (
+                      <>
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Added to Cart
+                      </>
+                    ) : (
+                      'Buy Now'
+                    )}
+                  </button>
                 </div>
-                <button 
-                  onClick={() => addToCart(p)} 
-                  className="w-full py-4 bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-black rounded-2xl transition-all shadow-lg shadow-purple-100 active:scale-95"
-                >
-                  Buy Now
-                </button>
-              </div>
-            ))}
+              );
+            })}
           </div>
         ) : (
-          /* CART UI - MATCHING image_ad92bf.png */
+          /* CART UI */
           <div className="max-w-3xl mx-auto">
             <div className="bg-white p-10 md:p-12 rounded-[24px] border border-slate-100 shadow-[0_4px_25px_rgba(0,0,0,0.03)]">
               <h3 className="text-[20px] font-bold text-[#1E293B] mb-8">Your Cart</h3>
@@ -220,7 +238,6 @@ function App() {
                       className="flex justify-between items-center p-6 bg-[#F8FAFC] rounded-[16px] transition-all hover:shadow-sm"
                     >
                       <div className="flex items-center gap-5">
-                        {/* Icon Container */}
                         <div className="w-14 h-14 bg-white rounded-[12px] flex items-center justify-center text-2xl shadow-sm border border-slate-50">
                           {item.icon}
                         </div>
@@ -256,7 +273,7 @@ function App() {
         )}
       </main>
 
-      {/* HOW IT WORKS SECTION - MATCHING image_b77790.png */}
+      {/* HOW IT WORKS SECTION */}
       <section className="py-24 bg-white border-t border-slate-50">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <h2 className="text-[42px] font-bold text-[#1E293B] mb-4 tracking-tight">Get Started In 3 Steps</h2>
@@ -264,40 +281,89 @@ function App() {
           
           <div className="grid md:grid-cols-3 gap-8 px-4">
             {[
-              { 
-                id: "01", 
-                title: "Create Account", 
-                img: "/user.png", 
-                desc: "Sign up for free in seconds. No credit card required to get started." 
-              },
-              { 
-                id: "02", 
-                title: "Choose Products", 
-                img: "/package.png", 
-                desc: "Browse our catalog and select the tools that fit your needs." 
-              },
-              { 
-                id: "03", 
-                title: "Start Creating", 
-                img: "/rocket.png", 
-                desc: "Download and start using your premium tools immediately." 
-              }
+              { id: "01", title: "Create Account", img: "/user.png", desc: "Sign up for free in seconds. No credit card required to get started." },
+              { id: "02", title: "Choose Products", img: "/package.png", desc: "Browse our catalog and select the tools that fit your needs." },
+              { id: "03", title: "Start Creating", img: "/rocket.png", desc: "Download and start using your premium tools immediately." }
             ].map((step) => (
               <div key={step.id} className="bg-white p-12 rounded-[20px] border border-slate-100 shadow-[0_2px_15px_rgba(0,0,0,0.02)] relative group hover:shadow-lg transition-all duration-300">
-                {/* Step Number Badge */}
                 <div className="absolute top-5 right-5 bg-[#7C3AED] text-white w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold shadow-sm shadow-purple-200">
                   {step.id}
                 </div>
-                
-                {/* Icon Container */}
                 <div className="w-24 h-24 bg-[#F5F3FF] rounded-full flex items-center justify-center mx-auto mb-8 transition-transform group-hover:scale-105 duration-300">
                   <img src={step.img} alt={step.title} className="w-12 h-12 object-contain" />
                 </div>
-                
                 <h3 className="text-[20px] font-bold text-slate-800 mb-4">{step.title}</h3>
                 <p className="text-slate-400 text-[13px] leading-relaxed max-w-[210px] mx-auto font-medium">{step.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PRICING SECTION */}
+      <section className="py-24 bg-[#F8FAFC]">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <h2 className="text-[48px] font-bold text-[#0F172A] mb-4">Simple, Transparent Pricing</h2>
+          <p className="text-slate-500 text-lg mb-16">Choose the plan that fits your needs. Upgrade or downgrade anytime.</p>
+          
+          <div className="grid md:grid-cols-3 gap-8 items-center max-w-6xl mx-auto">
+            {/* Starter Plan */}
+            <div className="bg-white p-10 rounded-[32px] border border-slate-100 text-left flex flex-col h-full shadow-sm">
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">Starter</h3>
+              <p className="text-slate-500 text-sm mb-8">Perfect for getting started</p>
+              <div className="flex items-baseline gap-1 mb-10">
+                <span className="text-[48px] font-bold text-slate-900">$0</span>
+                <span className="text-slate-400 font-medium">/Month</span>
+              </div>
+              <div className="space-y-4 mb-12 flex-grow">
+                {['Access to 10 free tools', 'Basic templates', 'Community support', '1 project per month'].map((f) => (
+                  <div key={f} className="flex items-center gap-3 text-sm font-medium text-slate-600">
+                    <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" /></svg>
+                    {f}
+                  </div>
+                ))}
+              </div>
+              <button className="w-full py-4 bg-[#7C3AED] text-white font-bold rounded-2xl hover:opacity-90 transition-all">Get Started Free</button>
+            </div>
+
+            {/* Pro Plan */}
+            <div className="bg-[#7C3AED] p-10 rounded-[32px] text-left flex flex-col h-full relative shadow-2xl shadow-purple-200">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#FEF3C7] text-[#D97706] px-4 py-1.5 rounded-full text-xs font-bold shadow-sm">Most Popular</div>
+              <h3 className="text-2xl font-bold text-white mb-2">Pro</h3>
+              <p className="text-purple-100 text-sm mb-8">Best for professionals</p>
+              <div className="flex items-baseline gap-1 mb-10">
+                <span className="text-[48px] font-bold text-white">$29</span>
+                <span className="text-purple-100 font-medium">/Month</span>
+              </div>
+              <div className="space-y-4 mb-12 flex-grow">
+                {['Access to all premium tools', 'Unlimited templates', 'Priority support', 'Unlimited projects', 'Cloud sync', 'Advanced analytics'].map((f) => (
+                  <div key={f} className="flex items-center gap-3 text-sm font-medium text-white">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" /></svg>
+                    {f}
+                  </div>
+                ))}
+              </div>
+              <button className="w-full py-4 bg-white text-[#7C3AED] font-bold rounded-2xl hover:bg-slate-50 transition-all">Start Pro Trial</button>
+            </div>
+
+            {/* Enterprise Plan */}
+            <div className="bg-white p-10 rounded-[32px] border border-slate-100 text-left flex flex-col h-full shadow-sm">
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">Enterprise</h3>
+              <p className="text-slate-500 text-sm mb-8">For teams and businesses</p>
+              <div className="flex items-baseline gap-1 mb-10">
+                <span className="text-[48px] font-bold text-slate-900">$99</span>
+                <span className="text-slate-400 font-medium">/Month</span>
+              </div>
+              <div className="space-y-4 mb-12 flex-grow">
+                {['Everything in Pro', 'Team collaboration', 'Custom integrations', 'Dedicated support', 'SLA guarantee', 'Custom branding'].map((f) => (
+                  <div key={f} className="flex items-center gap-3 text-sm font-medium text-slate-600">
+                    <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" /></svg>
+                    {f}
+                  </div>
+                ))}
+              </div>
+              <button className="w-full py-4 bg-[#7C3AED] text-white font-bold rounded-2xl hover:opacity-90 transition-all">Contact Sales</button>
+            </div>
           </div>
         </div>
       </section>
