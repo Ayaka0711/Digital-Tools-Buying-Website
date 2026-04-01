@@ -3,12 +3,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-  // --- STATE ---
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [view, setView] = useState('products');
 
-  // --- LOAD PRODUCTS ---
   useEffect(() => {
     fetch('/products.json')
       .then(res => res.json())
@@ -16,7 +14,6 @@ function App() {
       .catch(() => toast.error('Failed to load products'));
   }, []);
 
-  // --- CART LOGIC ---
   const addToCart = (product) => {
     const exists = cart.find(item => item.id === product.id);
     if (exists) {
@@ -39,13 +36,9 @@ function App() {
       
       {/* NAVBAR */}
       <nav className="flex items-center justify-between bg-white px-6 lg:px-20 py-6 sticky top-0 z-50 border-b border-slate-50 shadow-sm">
-        <div 
-          className="text-[28px] font-bold text-[#7C3AED] tracking-tight cursor-pointer" 
-          onClick={() => setView('products')}
-        >
+        <div className="text-[28px] font-bold text-[#7C3AED] tracking-tight cursor-pointer" onClick={() => setView('products')}>
           DigiTools
         </div>
-
         <div className="hidden md:flex gap-10 text-slate-600 font-medium text-sm">
           <button onClick={() => setView('products')} className="hover:text-[#7C3AED] transition">Products</button>
           <button className="hover:text-[#7C3AED] transition">Features</button>
@@ -53,321 +46,220 @@ function App() {
           <button className="hover:text-[#7C3AED] transition">Testimonials</button>
           <button className="hover:text-[#7C3AED] transition">FAQ</button>
         </div>
-
         <div className="flex items-center gap-6">
           <div className="relative cursor-pointer group flex items-center gap-1" onClick={() => setView('cart')}>
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              className={`h-5 w-5 transition ${view === 'cart' ? 'text-[#7C3AED]' : 'text-slate-700 group-hover:text-[#7C3AED]'}`}
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 transition ${view === 'cart' ? 'text-[#7C3AED]' : 'text-slate-700 group-hover:text-[#7C3AED]'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
-            {cart.length > 0 && (
-              <span className="absolute -top-2 -right-3 bg-[#7C3AED] text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                {cart.length}
-              </span>
-            )}
+            {cart.length > 0 && <span className="absolute -top-2 -right-3 bg-[#7C3AED] text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">{cart.length}</span>}
           </div>
-
-          <button className="hidden sm:block text-sm font-medium text-slate-700 hover:text-[#7C3AED]">
-            Login
-          </button>
-
-          <button className="bg-gradient-to-r from-[#7C3AED] to-[#A855F7] hover:opacity-90 text-white text-sm font-bold py-2.5 px-7 rounded-full transition-all shadow-md shadow-purple-100">
-            Get Started
-          </button>
+          <button className="bg-gradient-to-r from-[#7C3AED] to-[#A855F7] hover:opacity-90 text-white text-sm font-bold py-2.5 px-7 rounded-full transition-all shadow-md shadow-purple-100">Get Started</button>
         </div>
       </nav>
 
-      {/* HERO SECTION */}
-      <section className="py-20 px-6 lg:px-32 grid md:grid-cols-2 gap-12 items-center bg-white">
-        <div className="flex flex-col items-start">
-          <div className="inline-flex items-center gap-2 bg-[#F3E8FF] text-[#7C3AED] px-4 py-1.5 rounded-full mb-6 text-sm font-bold border border-[#DDD6FE]">
-            <span className="w-2 h-2 bg-[#7C3AED] rounded-full animate-pulse"></span>
-            New: AI-Powered Tools Available
-          </div>
-          <h1 className="text-[60px] font-bold text-[#1E293B] leading-[1.05] tracking-tight mb-6">
-            Supercharge Your <br /> 
-            <span className="text-slate-800">Digital Workflow</span>
-          </h1>
-          <p className="text-[#64748B] text-lg max-w-md leading-relaxed mb-10">
-            Access premium AI tools, design assets, templates, and productivity 
-            software—all in one place. Start creating faster today.
-          </p>
-          <div className="flex gap-4">
-            <button 
-              onClick={() => setView('products')} 
-              className="bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-bold py-4 px-10 rounded-full shadow-lg shadow-purple-200 transition-all active:scale-95"
-            >
-              Explore Products
-            </button>
-
-            <button className="flex items-center gap-3 border border-[#7C3AED] text-[#7C3AED] font-bold py-4 px-10 rounded-full hover:bg-[#F5F3FF] transition-all group active:scale-95">
-              <div className="w-6 h-6 flex items-center justify-center overflow-hidden shrink-0">
-                <img 
-                  src="/Play.png" 
-                  alt="Play" 
-                  className="w-full h-full object-contain group-hover:scale-110 transition-transform"
-                  onError={(e) => { e.target.style.display = 'none'; }} 
-                />
+      {/* MAIN VIEW */}
+      {view === 'products' ? (
+        <>
+          {/* HERO SECTION */}
+          <section className="py-20 px-6 lg:px-32 grid md:grid-cols-2 gap-12 items-center bg-white">
+            <div className="flex flex-col items-start">
+              <div className="inline-flex items-center gap-2 bg-[#F3E8FF] text-[#7C3AED] px-4 py-1.5 rounded-full mb-6 text-sm font-bold border border-[#DDD6FE]">
+                <span className="w-2 h-2 bg-[#7C3AED] rounded-full animate-pulse"></span>
+                New: AI-Powered Tools Available
               </div>
-              <span>Watch Demo</span>
-            </button>
-          </div>
-        </div>
-        <div className="relative">
-          <div className="rounded-[40px] overflow-hidden shadow-2xl border-8 border-white">
-            <img src="/banner.png" alt="Hero" className="w-full h-auto" />
-          </div>
-        </div>
-      </section>
+              <h1 className="text-[60px] font-bold text-[#1E293B] leading-[1.05] tracking-tight mb-6">Supercharge Your <br /><span className="text-slate-800">Digital Workflow</span></h1>
+              <p className="text-[#64748B] text-lg max-w-md leading-relaxed mb-10">Access premium AI tools, design assets, and productivity software—all in one place.</p>
+              <button onClick={() => setView('products')} className="bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-bold py-4 px-10 rounded-full shadow-lg shadow-purple-200 transition-all">Explore Products</button>
+            </div>
+            <div className="rounded-[40px] overflow-hidden shadow-2xl border-8 border-white"><img src="/banner.png" alt="Hero" className="w-full h-auto" /></div>
+          </section>
 
-      {/* STATS BAR */}
-      <section className="bg-[#7C3AED] text-white py-16 px-6 lg:px-20 grid grid-cols-3 text-center">
-        <div><h2 className="text-5xl font-black mb-1">50K+</h2><p className="text-purple-100 font-medium">Active Users</p></div>
-        <div><h2 className="text-5xl font-black mb-1">200+</h2><p className="text-purple-100 font-medium">Premium Tools</p></div>
-        <div><h2 className="text-5xl font-black mb-1">4.9</h2><p className="text-purple-100 font-medium">User Rating</p></div>
-      </section>
-
-      {/* MAIN CONTENT AREA */}
-      <main className="py-20 px-6 lg:px-20 max-w-7xl mx-auto">
-        <div className="mb-10 text-center">
-          <h2 className="text-[44px] font-bold text-[#1E293B] mb-3 tracking-tight">
-            Premium Digital Tools
-          </h2>
-          <p className="text-slate-500 text-[15px] max-w-lg mx-auto leading-relaxed">
-            Choose from our curated collection of premium digital products designed to boost your productivity and creativity.
-          </p>
-        </div>
-
-        {/* VIEW TOGGLE */}
-        <div className="flex justify-center mb-16">
-          <div className="bg-[#F8FAFC] p-1 rounded-full border border-slate-100 flex shadow-sm">
-            <button
-              onClick={() => setView('products')}
-              className={`px-10 py-2.5 rounded-full text-sm font-bold transition-all ${view === 'products' ? 'bg-[#7C3AED] text-white shadow-md' : 'text-slate-500'}`}
-            >
-              Products
-            </button>
-            <button
-              onClick={() => setView('cart')}
-              className={`px-10 py-2.5 rounded-full text-sm font-bold transition-all ${view === 'cart' ? 'bg-[#7C3AED] text-white shadow-md' : 'text-slate-500'}`}
-            >
-              Cart ({cart.length})
-            </button>
-          </div>
-        </div>
-
-        {view === 'products' ? (
-          /* PRODUCTS GRID */
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((p) => {
-              const isInCart = cart.some(item => item.id === p.id);
-              return (
-                <div key={p.id} className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm relative flex flex-col hover:shadow-xl hover:-translate-y-2 transition-all duration-500 group">
-                  <div className="absolute top-6 right-6">
-                    <span className={`${p.tagColor} text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest`}>
-                      {p.tag}
-                    </span>
-                  </div>
-                  <div className="w-16 h-16 bg-[#F8FAFC] rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition-transform">
-                    {p.icon}
-                  </div>
-                  <h3 className="text-[24px] font-black text-[#1E293B] mb-3 leading-tight">{p.name}</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed mb-8">{p.description}</p>
-                  <div className="flex items-baseline gap-1 mb-8">
-                    <span className="text-4xl font-black text-[#1E293B]">${p.price}</span>
-                    <span className="text-slate-400 font-bold">{p.period}</span>
-                  </div>
-                  <div className="space-y-4 mb-10 flex-grow">
-                    {p.features?.map((f, i) => (
-                      <div key={i} className="flex items-center gap-3 text-sm font-semibold text-slate-600">
-                        <div className="bg-green-100 p-0.5 rounded-full">
-                          <svg className="w-3.5 h-3.5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="4">
-                            <path d="M5 13l4 4L19 7" />
-                          </svg>
-                        </div>
-                        {f}
-                      </div>
-                    ))}
-                  </div>
-                  
-                  {/* DYNAMIC BUTTON LOGIC */}
-                  <button 
-                    onClick={() => addToCart(p)} 
-                    disabled={isInCart}
-                    className={`w-full py-4 font-black rounded-2xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2 
-                      ${isInCart 
-                        ? 'bg-green-500 text-white shadow-green-100 cursor-default' 
-                        : 'bg-[#7C3AED] hover:bg-[#6D28D9] text-white shadow-purple-100'}`}
-                  >
-                    {isInCart ? (
-                      <>
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
-                        Added to Cart
-                      </>
-                    ) : (
-                      'Buy Now'
-                    )}
-                  </button>
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          /* CART UI */
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-white p-10 md:p-12 rounded-[24px] border border-slate-100 shadow-[0_4px_25px_rgba(0,0,0,0.03)]">
-              <h3 className="text-[20px] font-bold text-[#1E293B] mb-8">Your Cart</h3>
-
-              {cart.length === 0 ? (
-                <div className="text-center py-16">
-                  <p className="text-slate-400 text-lg font-medium mb-6">Your cart is currently empty</p>
-                  <button onClick={() => setView('products')} className="text-[#7C3AED] font-bold hover:underline">Return to Products</button>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {cart.map((item) => (
-                    <div 
-                      key={item.id} 
-                      className="flex justify-between items-center p-6 bg-[#F8FAFC] rounded-[16px] transition-all hover:shadow-sm"
+          {/* PRODUCTS GRID */}
+          <section className="py-20 px-6 lg:px-20 max-w-7xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-8">
+              {products.map((p) => {
+                const isInCart = cart.some(item => item.id === p.id);
+                return (
+                  <div key={p.id} className="bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm flex flex-col hover:shadow-xl transition-all group">
+                    <div className="w-16 h-16 bg-[#F8FAFC] rounded-2xl flex items-center justify-center text-3xl mb-8">{p.icon}</div>
+                    <h3 className="text-[24px] font-black text-[#1E293B] mb-3">{p.name}</h3>
+                    <p className="text-slate-500 text-sm mb-8">{p.description}</p>
+                    <div className="text-4xl font-black text-[#1E293B] mb-10">${p.price}<span className="text-slate-400 text-sm">/mo</span></div>
+                    <button 
+                      onClick={() => addToCart(p)} 
+                      disabled={isInCart}
+                      className={`w-full py-4 font-black rounded-2xl transition-all flex items-center justify-center gap-2 ${isInCart ? 'bg-green-500 text-white' : 'bg-[#7C3AED] text-white hover:bg-[#6D28D9]'}`}
                     >
-                      <div className="flex items-center gap-5">
-                        <div className="w-14 h-14 bg-white rounded-[12px] flex items-center justify-center text-2xl shadow-sm border border-slate-50">
-                          {item.icon}
-                        </div>
-                        <div>
-                          <p className="font-bold text-[17px] text-[#1E293B]">{item.name}</p>
-                          <p className="text-slate-400 text-xs font-semibold mt-1">${item.price}</p>
-                        </div>
-                      </div>
-                      
-                      <button 
-                        onClick={() => removeFromCart(item.id)} 
-                        className="text-[#FF4D8D] text-xs font-bold hover:opacity-80 transition-opacity"
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  ))}
-
-                  <div className="mt-10">
-                    <div className="flex justify-between items-center mb-8 px-2">
-                      <span className="text-slate-400 font-medium text-sm">Total:</span>
-                      <span className="text-[24px] font-bold text-[#1E293B]">${cartTotal}</span>
-                    </div>
-                    
-                    <button className="w-full bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-bold py-4.5 px-8 rounded-full text-sm transition-all shadow-md shadow-purple-100">
-                      Proceed To Checkout
+                      {isInCart ? <><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3"><path d="M5 13l4 4L19 7" /></svg>Added to Cart</> : 'Buy Now'}
                     </button>
                   </div>
-                </div>
-              )}
+                );
+              })}
             </div>
-          </div>
-        )}
-      </main>
+          </section>
 
-      {/* HOW IT WORKS SECTION */}
-      <section className="py-24 bg-white border-t border-slate-50">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="text-[42px] font-bold text-[#1E293B] mb-4 tracking-tight">Get Started In 3 Steps</h2>
-          <p className="text-slate-400 text-sm mb-20 font-medium">Start using premium digital tools in minutes, not hours.</p>
-          
-          <div className="grid md:grid-cols-3 gap-8 px-4">
-            {[
-              { id: "01", title: "Create Account", img: "/user.png", desc: "Sign up for free in seconds. No credit card required to get started." },
-              { id: "02", title: "Choose Products", img: "/package.png", desc: "Browse our catalog and select the tools that fit your needs." },
-              { id: "03", title: "Start Creating", img: "/rocket.png", desc: "Download and start using your premium tools immediately." }
-            ].map((step) => (
-              <div key={step.id} className="bg-white p-12 rounded-[20px] border border-slate-100 shadow-[0_2px_15px_rgba(0,0,0,0.02)] relative group hover:shadow-lg transition-all duration-300">
-                <div className="absolute top-5 right-5 bg-[#7C3AED] text-white w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold shadow-sm shadow-purple-200">
-                  {step.id}
+          {/* PRICING SECTION - EXACT MATCH image_b864ca.png */}
+          <section className="py-24 bg-[#F8FAFC]">
+            <div className="max-w-7xl mx-auto px-6 text-center">
+              <h2 className="text-[44px] font-bold text-[#0F172A] mb-4">Simple, Transparent Pricing</h2>
+              <p className="text-slate-500 text-base mb-16">Choose the plan that fits your needs. Upgrade or downgrade anytime.</p>
+              <div className="grid md:grid-cols-3 gap-6 items-stretch max-w-6xl mx-auto">
+                {/* Starter */}
+                <div className="bg-white p-10 rounded-[24px] border border-slate-200 text-left flex flex-col">
+                  <h3 className="text-xl font-bold text-[#0F172A] mb-1">Starter</h3>
+                  <p className="text-slate-500 text-sm mb-8">Perfect for getting started</p>
+                  <div className="mb-8"><span className="text-4xl font-bold text-[#0F172A]">$0</span><span className="text-slate-500 text-sm">/Month</span></div>
+                  <div className="space-y-4 mb-10 flex-grow text-[#1E293B] text-sm">
+                    {['Access to 10 free tools', 'Basic templates', 'Community support', '1 project per month'].map(f => (
+                      <div key={f} className="flex gap-3"><svg className="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"/></svg>{f}</div>
+                    ))}
+                  </div>
+                  <button className="w-full py-4 bg-[#7C3AED] text-white font-bold rounded-xl">Get Started Free</button>
                 </div>
-                <div className="w-24 h-24 bg-[#F5F3FF] rounded-full flex items-center justify-center mx-auto mb-8 transition-transform group-hover:scale-105 duration-300">
-                  <img src={step.img} alt={step.title} className="w-12 h-12 object-contain" />
+                {/* Pro */}
+                <div className="bg-[#8B5CF6] p-10 rounded-[24px] text-left flex flex-col relative scale-105 shadow-2xl z-10">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#FEF3C7] text-[#D97706] px-4 py-1 rounded-full text-xs font-bold shadow-sm">Most Popular</div>
+                  <h3 className="text-xl font-bold text-white mb-1">Pro</h3>
+                  <p className="text-purple-100 text-sm mb-8">Best for professionals</p>
+                  <div className="mb-8"><span className="text-4xl font-bold text-white">$29</span><span className="text-purple-100 text-sm">/Month</span></div>
+                  <div className="space-y-4 mb-10 flex-grow text-white text-sm">
+                    {['Access to all premium tools', 'Unlimited templates', 'Priority support', 'Unlimited projects', 'Cloud sync', 'Advanced analytics'].map(f => (
+                      <div key={f} className="flex gap-3"><svg className="w-5 h-5 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"/></svg>{f}</div>
+                    ))}
+                  </div>
+                  <button className="w-full py-4 bg-white text-[#7C3AED] font-bold rounded-xl">Start Pro Trial</button>
                 </div>
-                <h3 className="text-[20px] font-bold text-slate-800 mb-4">{step.title}</h3>
-                <p className="text-slate-400 text-[13px] leading-relaxed max-w-[210px] mx-auto font-medium">{step.desc}</p>
+                {/* Enterprise */}
+                <div className="bg-white p-10 rounded-[24px] border border-slate-200 text-left flex flex-col">
+                  <h3 className="text-xl font-bold text-[#0F172A] mb-1">Enterprise</h3>
+                  <p className="text-slate-500 text-sm mb-8">For teams and businesses</p>
+                  <div className="mb-8"><span className="text-4xl font-bold text-[#0F172A]">$99</span><span className="text-slate-500 text-sm">/Month</span></div>
+                  <div className="space-y-4 mb-10 flex-grow text-[#1E293B] text-sm">
+                    {['Everything in Pro', 'Team collaboration', 'Custom integrations', 'Dedicated support', 'SLA guarantee', 'Custom branding'].map(f => (
+                      <div key={f} className="flex gap-3"><svg className="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"/></svg>{f}</div>
+                    ))}
+                  </div>
+                  <button className="w-full py-4 bg-[#7C3AED] text-white font-bold rounded-xl">Contact Sales</button>
+                </div>
               </div>
-            ))}
+            </div>
+          </section>
+
+          {/* CTA SECTION - EXACT MATCH image_b8dc8c.jpg */}
+          <section className="py-24 px-6 bg-white">
+            <div className="max-w-6xl mx-auto rounded-[40px] bg-gradient-to-r from-[#7C3AED] to-[#A855F7] p-16 md:p-24 text-center">
+              <h2 className="text-white text-[42px] md:text-[54px] font-bold mb-6 tracking-tight">Ready To Transform Your Workflow?</h2>
+              <p className="text-purple-100 text-lg md:text-xl max-w-2xl mx-auto mb-12 opacity-90">Join thousands of professionals who are already using Digitools to work smarter. Start your free trial today.</p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
+                <button className="bg-white text-[#7C3AED] px-10 py-5 rounded-full font-bold text-lg shadow-xl active:scale-95">Explore Products</button>
+                <button className="border-2 border-white/40 text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-white/10 active:scale-95">View Pricing</button>
+              </div>
+              <p className="text-purple-200 text-sm">14-day free trial • No credit card required • Cancel anytime</p>
+            </div>
+          </section>
+        </>
+      ) : (
+        /* CART VIEW */
+        <main className="py-20 px-6 max-w-3xl mx-auto">
+          <div className="bg-white p-10 rounded-[24px] border border-slate-100 shadow-xl">
+            <h3 className="text-2xl font-bold mb-8">Your Cart</h3>
+            {cart.length === 0 ? <p className="text-center py-10 text-slate-400">Your cart is empty.</p> : (
+              <div className="space-y-4">
+                {cart.map(item => (
+                  <div key={item.id} className="flex justify-between items-center p-6 bg-slate-50 rounded-xl">
+                    <div className="font-bold">{item.name} - ${item.price}</div>
+                    <button onClick={() => removeFromCart(item.id)} className="text-red-500 font-bold">Remove</button>
+                  </div>
+                ))}
+                <div className="pt-8 flex justify-between items-center text-2xl font-bold border-t"><span>Total:</span><span>${cartTotal}</span></div>
+                <button className="w-full bg-[#7C3AED] text-white py-4 rounded-full mt-6 font-bold">Checkout</button>
+              </div>
+            )}
+          </div>
+        </main>
+      )}
+
+{/* FOOTER SECTION */}
+<footer className="bg-[#0B1221] text-white pt-24 pb-12 px-6 lg:px-20 border-t border-slate-800">
+  <div className="max-w-7xl mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-20">
+      
+      {/* Branding Column */}
+      <div className="lg:col-span-2">
+        <div className="text-3xl font-bold mb-6 text-white">DigiTools</div>
+        <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
+          Premium digital tools for creators, professionals, and businesses. Work smarter with our suite of powerful tools.
+        </p>
+      </div>
+      
+      {/* Link Columns */}
+      <div>
+        <h4 className="font-bold mb-6 text-base text-white">Product</h4>
+        <ul className="space-y-4 text-slate-400 text-sm font-medium">
+          <li className="hover:text-white cursor-pointer transition">Features</li>
+          <li className="hover:text-white cursor-pointer transition">Pricing</li>
+          <li className="hover:text-white cursor-pointer transition">Templates</li>
+          <li className="hover:text-white cursor-pointer transition">Integrations</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 className="font-bold mb-6 text-base text-white">Company</h4>
+        <ul className="space-y-4 text-slate-400 text-sm font-medium">
+          <li className="hover:text-white cursor-pointer transition">About</li>
+          <li className="hover:text-white cursor-pointer transition">Blog</li>
+          <li className="hover:text-white cursor-pointer transition">Careers</li>
+          <li className="hover:text-white cursor-pointer transition">Press</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 className="font-bold mb-6 text-base text-white">Resources</h4>
+        <ul className="space-y-4 text-slate-400 text-sm font-medium mb-10">
+          <li className="hover:text-white cursor-pointer transition">Documentation</li>
+          <li className="hover:text-white cursor-pointer transition">Help Center</li>
+          <li className="hover:text-white cursor-pointer transition">Community</li>
+          <li className="hover:text-white cursor-pointer transition">Contact</li>
+        </ul>
+      </div>
+
+      {/* Social Links Side-by-Side with Resources */}
+      <div>
+        <h4 className="font-bold mb-6 text-base text-white">Social Links</h4>
+        <div className="flex gap-3">
+          {/* Instagram Icon */}
+          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#0B1221] hover:bg-slate-200 cursor-pointer transition shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.999 0h.001zm1.978 1.149c.83.038 1.282.177 1.583.294.398.155.682.341.98.639.298.298.484.582.639.98.117.301.256.753.294 1.583.039.842.048 1.093.048 3.235s-.01 2.393-.048 3.235c-.038.83-.177 1.282-.294 1.583a2.633 2.633 0 0 1-.639.98 2.633 2.633 0 0 1-.98.639c-.301.117-.753.256-1.583.294-.842.039-1.093.048-3.235.048s-2.393-.01-3.235-.048c-.83-.038-1.282-.177-1.583-.294a2.633 2.633 0 0 1-.98-.639 2.633 2.633 0 0 1-.639-.98c-.117-.301-.256-.753-.294-1.583-.039-.842-.048-1.093-.048-3.235s.01-2.393.048-3.235c.038-.83.177-1.282.294-1.583a2.633 2.633 0 0 1 .639-.98 2.633 2.633 0 0 1 .98-.639c.301-.117.753-.256 1.583-.294.842-.039 1.093-.048 3.235-.048s2.393.01 3.235.048zM8 3.89a4.11 4.11 0 1 0 0 8.22 4.11 4.11 0 0 0 0-8.22zm0 6.786a2.677 2.677 0 1 1 0-5.355 2.677 2.677 0 0 1 0 5.355zm4.823-7.592a1.092 1.092 0 1 0 0 2.184 1.092 1.092 0 0 0 0-2.184z"/>
+            </svg>
+          </div>
+          {/* Facebook Icon */}
+          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#0B1221] hover:bg-slate-200 cursor-pointer transition shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+            </svg>
+          </div>
+          {/* X Icon */}
+          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#0B1221] hover:bg-slate-200 cursor-pointer transition shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865l8.875 11.633Z"/>
+            </svg>
           </div>
         </div>
-      </section>
-
-      {/* PRICING SECTION */}
-      <section className="py-24 bg-[#F8FAFC]">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="text-[48px] font-bold text-[#0F172A] mb-4">Simple, Transparent Pricing</h2>
-          <p className="text-slate-500 text-lg mb-16">Choose the plan that fits your needs. Upgrade or downgrade anytime.</p>
-          
-          <div className="grid md:grid-cols-3 gap-8 items-center max-w-6xl mx-auto">
-            {/* Starter Plan */}
-            <div className="bg-white p-10 rounded-[32px] border border-slate-100 text-left flex flex-col h-full shadow-sm">
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">Starter</h3>
-              <p className="text-slate-500 text-sm mb-8">Perfect for getting started</p>
-              <div className="flex items-baseline gap-1 mb-10">
-                <span className="text-[48px] font-bold text-slate-900">$0</span>
-                <span className="text-slate-400 font-medium">/Month</span>
-              </div>
-              <div className="space-y-4 mb-12 flex-grow">
-                {['Access to 10 free tools', 'Basic templates', 'Community support', '1 project per month'].map((f) => (
-                  <div key={f} className="flex items-center gap-3 text-sm font-medium text-slate-600">
-                    <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" /></svg>
-                    {f}
-                  </div>
-                ))}
-              </div>
-              <button className="w-full py-4 bg-[#7C3AED] text-white font-bold rounded-2xl hover:opacity-90 transition-all">Get Started Free</button>
-            </div>
-
-            {/* Pro Plan */}
-            <div className="bg-[#7C3AED] p-10 rounded-[32px] text-left flex flex-col h-full relative shadow-2xl shadow-purple-200">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#FEF3C7] text-[#D97706] px-4 py-1.5 rounded-full text-xs font-bold shadow-sm">Most Popular</div>
-              <h3 className="text-2xl font-bold text-white mb-2">Pro</h3>
-              <p className="text-purple-100 text-sm mb-8">Best for professionals</p>
-              <div className="flex items-baseline gap-1 mb-10">
-                <span className="text-[48px] font-bold text-white">$29</span>
-                <span className="text-purple-100 font-medium">/Month</span>
-              </div>
-              <div className="space-y-4 mb-12 flex-grow">
-                {['Access to all premium tools', 'Unlimited templates', 'Priority support', 'Unlimited projects', 'Cloud sync', 'Advanced analytics'].map((f) => (
-                  <div key={f} className="flex items-center gap-3 text-sm font-medium text-white">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" /></svg>
-                    {f}
-                  </div>
-                ))}
-              </div>
-              <button className="w-full py-4 bg-white text-[#7C3AED] font-bold rounded-2xl hover:bg-slate-50 transition-all">Start Pro Trial</button>
-            </div>
-
-            {/* Enterprise Plan */}
-            <div className="bg-white p-10 rounded-[32px] border border-slate-100 text-left flex flex-col h-full shadow-sm">
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">Enterprise</h3>
-              <p className="text-slate-500 text-sm mb-8">For teams and businesses</p>
-              <div className="flex items-baseline gap-1 mb-10">
-                <span className="text-[48px] font-bold text-slate-900">$99</span>
-                <span className="text-slate-400 font-medium">/Month</span>
-              </div>
-              <div className="space-y-4 mb-12 flex-grow">
-                {['Everything in Pro', 'Team collaboration', 'Custom integrations', 'Dedicated support', 'SLA guarantee', 'Custom branding'].map((f) => (
-                  <div key={f} className="flex items-center gap-3 text-sm font-medium text-slate-600">
-                    <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" /></svg>
-                    {f}
-                  </div>
-                ))}
-              </div>
-              <button className="w-full py-4 bg-[#7C3AED] text-white font-bold rounded-2xl hover:opacity-90 transition-all">Contact Sales</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      </div>
+    </div>
+    
+    {/* Bottom Footer Section */}
+    <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-slate-500 text-sm font-medium">
+      <p>© 2026 Digitools. All rights reserved.</p>
+      <div className="flex gap-8">
+        <span className="hover:text-white cursor-pointer transition">Privacy Policy</span>
+        <span className="hover:text-white cursor-pointer transition">Terms of Service</span>
+        <span className="hover:text-white cursor-pointer transition">Cookies</span>
+      </div>
+    </div>
+  </div>
+</footer>
       <ToastContainer position="bottom-right" theme="colored" />
     </div>
   );
